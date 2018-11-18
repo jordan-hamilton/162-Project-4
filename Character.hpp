@@ -26,6 +26,7 @@ class Character {
   int getNumDefenseDice();
   int getNumDefenseDieSides();
   std::string getCharacteristics();
+  std::string getName();
   std::string getType();
 
   void setAttackPts(int attack);
@@ -37,6 +38,7 @@ class Character {
   void setNumDefenseDice(int dice);
   void setNumDefenseDieSides(int sides);
   void setCharacteristics(std::string description);
+  void setName(std::string characterName);
   void setType(std::string characterType);
 
   private:
@@ -44,7 +46,7 @@ class Character {
   protected:
     int attackPts, defensePts, armorPts, strengthPts, numAttackDice,
     numAttackSides, numDefenseDice, numDefenseSides;
-    std::string characteristics, type;
+    std::string characteristics, name, type;
 
 };
 

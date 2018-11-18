@@ -15,6 +15,7 @@ Character::Character() {
   numDefenseDice = -1;
   numDefenseSides = -1;
   characteristics = "";
+  name = "";
 
 }
 
@@ -82,6 +83,11 @@ std::string Character::getCharacteristics() {
 }
 
 
+std::string Character::getName() {
+  return name;
+}
+
+
 std::string Character::getType() {
   return type;
 }
@@ -129,6 +135,11 @@ void Character::setNumDefenseDieSides(int sides) {
 
 void Character::setCharacteristics(std::string description) {
   characteristics = description;
+}
+
+
+void Character::setName(std::string characterName) {
+  name = characterName;
 }
 
 
