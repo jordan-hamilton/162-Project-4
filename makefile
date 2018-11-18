@@ -6,9 +6,9 @@ CXXFLAGS += -Wall
 CXXFLAGS += -pedantic-errors
 CXXFLAGS += -g
 
-OBJS = main.o Menu.o Queue.o Barbarian.o BlueMen.o Character.o Game.o HarryPotter.o Medusa.o Vampire.o
-SRCS = main.cpp Menu.cpp Queue.cpp Barbarian.cpp BlueMen.cpp Character.cpp Game.cpp HarryPotter.cpp Medusa.cpp Vampire.cpp
-HEADERS = Menu.hpp Queue.hpp Barbarian.hpp BlueMen.hpp Character.hpp Game.hpp HarryPotter.hpp Medusa.hpp Vampire.hpp
+OBJS = main.o Menu.o Container.o Barbarian.o BlueMen.o Character.o Game.o HarryPotter.o Medusa.o Vampire.o
+SRCS = main.cpp Menu.cpp Container.cpp Barbarian.cpp BlueMen.cpp Character.cpp Game.cpp HarryPotter.cpp Medusa.cpp Vampire.cpp
+HEADERS = Menu.hpp Container.hpp Barbarian.hpp BlueMen.hpp Character.hpp Game.hpp HarryPotter.hpp Medusa.hpp Vampire.hpp
 
 project4: $(OBJS)
 	$(CXX) $(CXXFLAGS) $(OBJS) -o project4
