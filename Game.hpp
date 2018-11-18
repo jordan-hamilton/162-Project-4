@@ -8,6 +8,7 @@
 #include <iostream>
 
 #include "Character.hpp"
+#include "Container.hpp"
 #include "Barbarian.hpp"
 #include "BlueMen.hpp"
 #include "HarryPotter.hpp"
