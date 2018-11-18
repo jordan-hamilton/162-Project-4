@@ -7,13 +7,15 @@
 
 #include <iostream>
 
+#include "Character.hpp"
+
 class Container {
 
   struct ContainerNode {
 
     ContainerNode* next;
     ContainerNode* prev;
-    int val;
+    Character* gameCharacter;
 
   };
 
@@ -21,9 +23,9 @@ class Container {
     Container();
     ~Container();
     bool isEmpty();
-    void addBack(int val);
-    void addFront(int val);
-    int getFront();
+    void addBack(Character* backCharacter);
+    void addFront(Character* frontCharacter);
+    Character* getFront();
     void removeFront();
     void printContainer();
 

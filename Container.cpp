@@ -41,28 +41,28 @@ bool Container::isEmpty() {
 
 /*****************************************************************************************************
 ** Description: This method takes a integer, allocates memory and adds a pointer to a
-** ContainerNode object to the back of the container, setting its val data member to equal the integer
+** ContainerNode object to the back of the container, setting its Chracter to equal the pointer
 ** passed to the method. If the container was previously empty, the pointer to the object is
 ** assigned to the Container's head data member and the ContainerNode's prev and next pointers also
 ** to indicate that this is the only node in a circular linked list. Otherwise, the head is
 ** assigned to the object's next data member, and the head's prev data member is then assigned
-** to the object's prev to place this value before the head and after the ContainerNode that was the
+** to the object's prev to place this node before the head and after the ContainerNode that was the
 ** most recently at the back of the container. Finally, the next data member of the ContainerNode that
 ** was previously at the back of the container is set to the pointer to the new ContainerNode object,
 ** as is the head's prev data member.
 *****************************************************************************************************/
-void Container::addBack(int val) {
+void Container::addBack(Character* backCharacter) {
 
   if ( isEmpty() ) {
 
     head = new ContainerNode;
     head->prev = head;
     head->next = head;
-    head->val = val;
+    head->gameCharacter = backCharacter;
 
   } else {
 
-    ContainerNode* newBack = new ContainerNode {head, head->prev, val};
+    ContainerNode* newBack = new ContainerNode {head, head->prev, backCharacter};
 
     head->prev->next = newBack;
     head->prev = newBack;
@@ -76,28 +76,28 @@ void Container::addBack(int val) {
 
 /******************************************************************************************************
 ** Description: This method takes a integer, allocates memory and adds a pointer to a
-** ContainerNode object to the front of the container, setting its val data member to equal the integer
+** ContainerNode object to the front of the container, setting its Character to equal the pointer
 ** passed to the method. If the container was previously empty, the pointer to the object is
 ** assigned to the Container's head data member and the ContainerNode's prev and next pointers also
 ** to indicate that this is the only node in a circular linked list. Otherwise, the head is
 ** assigned to the object's next data member, and the head's prev data member is then assigned
-** to the object's prev to place this value before the head and after the ContainerNode at the back of
+** to the object's prev to place this node before the head and after the ContainerNode at the back of
 ** the container. Finally, the next data member of the ContainerNode at the back of the container is
 ** set to the pointer to the new ContainerNode object, as is the head's prev data member. The new
 ** object is then set as the head of the container.
 ******************************************************************************************************/
-void Container::addFront(int val) {
+void Container::addFront(Character* frontCharacter) {
 
   if ( isEmpty() ) {
 
     head = new ContainerNode;
     head->prev = head;
     head->next = head;
-    head->val = val;
+    head->gameCharacter = frontCharacter;
 
   } else {
 
-    ContainerNode* newFront = new ContainerNode {head, head->prev, val};
+    ContainerNode* newFront = new ContainerNode {head, head->prev, frontCharacter};
 
     head->prev->next = newFront;
     head->prev = newFront;
@@ -110,13 +110,13 @@ void Container::addFront(int val) {
 
 
 /***********************************************************************************************
-** Description: Returns the integer assigned to the val data member of the ContainerNode object.
+** Description: Returns the integer assigned to the Character pointer in the ContainerNode object.
 ** Note that to prevent getFront from trying to dereference to pointer when head is nullptr,
 ** the switch statement in main.cpp calls the isEmpty method first to ensure that getFront
 ** can be called safely.
 ***********************************************************************************************/
-int Container::getFront() {
-    return head->val;
+Character* Container::getFront() {
+    return head->gameCharacter;
 }
 
 
@@ -155,10 +155,10 @@ void Container::removeFront() {
 /**************************************************************************************************
 ** Description: This method checks that the container is not empty using the isEmpty method, then
 ** initializes a temporary pointer, currentNode, to the head pointer, and loops through the
-** circular linked list with a do-while loop to output each ContainerNode's val. currentNode is set
-** to the node's next pointer at the end of each loop, stopping the loop once currentNode is
-** once again equal to the head pointer. If the container is empty, an error message is displayed
-** instead.
+** circular linked list with a do-while loop to output the name of each ContainerNode's Character.
+** currentNode is set to the node's next pointer at the end of each loop, stopping the loop once
+** currentNode is once again equal to the head pointer. If the container is empty, an error message
+** is displayed instead.
 **************************************************************************************************/
 void Container::printContainer() {
 
@@ -168,13 +168,13 @@ void Container::printContainer() {
 
     do {
 
-      cout << currentNode->val << endl;
+      cout << currentNode->gameCharacter->getName() << endl;
       currentNode = currentNode->next;
 
     } while (currentNode != head);
 
   } else {
-    cout << "No values exist in this container." << endl;
+    cout << "No characters found." << endl;
   }
 
 
