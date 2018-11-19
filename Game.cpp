@@ -4,44 +4,68 @@
 
 using std::cout;
 using std::endl;
+using std::string;
+using std::to_string;
 
 
 Game::Game() {
-
+  gameMenu = new Menu;
+  team1Queue = new Container;
+  team2Queue = new Container;
 }
 
 
 /***********************************************************************************************
-** Description: Overloaded constructor that takes two integers, then calls the setFighter
-** function twice to allocate memory for Character objects that will be used in the game.
-***********************************************************************************************/
-Game::Game(int character1, int character2) {
-  setFighter(1, character1);
-  setFighter(2, character2);
-  fight(fighter1, fighter2);
-}
-
-
-/***********************************************************************************************
-** Description: Destructor that deletes pointers to Character objects.
+** Description: Destructor that deletes pointers to teach team's queue and the game's menu.
 ***********************************************************************************************/
 Game::~Game() {
 
-  if (fighter1) {
-    delete fighter1;
-    fighter1 = nullptr;
-  }
+  delete team1Queue;
+  team1Queue = nullptr;
 
-  if (fighter2) {
-    delete fighter2;
-    fighter2 = nullptr;
+  delete team2Queue;
+  team2Queue = nullptr;
+
+  delete gameMenu;
+  gameMenu = nullptr;
+
+}
+
+
+void Game::play() {
+
+  populateMenu(gameMenu);
+
+  int team1Size = gameMenu->getIntFromPrompt("\nHow many fighters should Team 1 have?", 1, 10, false);
+  promptForFighters(team1Queue, team1Size);
+  int team2Size = gameMenu->getIntFromPrompt("\nHow many fighters should Team 2 have?", 1, 10, false);
+  promptForFighters(team2Queue, team2Size);
+
+  while( !team1Queue->isEmpty() && !team2Queue->isEmpty() ) {
+    fight(team1Queue, team2Queue);
+  }
+  
+}
+
+/***********************************************************************************************
+** Description: Take a pointer to a menu object and adds relevant options for Characters to the
+** game's menu object using the addMenuItem method in the Menu class.
+***********************************************************************************************/
+void Game::populateMenu(Menu* menu) {
+
+  if (menu) {
+    gameMenu->addMenuItem("Barbarian");
+    gameMenu->addMenuItem("Blue Men");
+    gameMenu->addMenuItem("Harry Potter");
+    gameMenu->addMenuItem("Medusa");
+    gameMenu->addMenuItem("Vampire");
   }
 
 }
 
 
 /***********************************************************************************************
-** Description: Takes two pointers to Character objects, then initializes a random generator
+** Description: Takes two pointers to Container objects, then initializes a random generator
 ** seed and sets the random generator seed for any random events in the game. The strength
 ** of each character is stored in temporary variables, then either character1 or character2
 ** attacks first, depending on the return value of the firstStrike method. Fighter information
@@ -49,78 +73,78 @@ Game::~Game() {
 ** The most recent attacker is stored in the lastAttacker variable, then a while loop repeats,
 ** continues the fight, alternating attackers until one Character's strength is depleted.
 ***********************************************************************************************/
-void Game::fight(Character* character1, Character* character2) {
+void Game::fight(Container* team1Queue, Container* team2Queue) {
 
   unsigned seed = time(0);
   srand(seed);
 
   int lastAttacker = 0;
 
-  int character1Strength = character1->getStrengthPts();
-  int character2Strength = character2->getStrengthPts();
+  int character1Strength = team1Queue->getFront()->getStrengthPts();
+  int character2Strength = team2Queue->getFront()->getStrengthPts();
 
   cout << endl;
 
   if (firstStrike() == 1) {
 
-    displayType(character1, 1, true);
-    displayType(character2, 2, false);
+    displayType(team1Queue->getFront(), true);
+    displayType(team2Queue->getFront(), false);
 
-    character2->defend( character1->attack() );
+    team2Queue->getFront()->defend( team1Queue->getFront()->attack() );
 
-    displayRoll(character1, true);
-    displayRoll(character2, false);
+    displayRoll(team1Queue->getFront(), true);
+    displayRoll(team2Queue->getFront(), false);
 
-    displayDamage(character2, 2, character2Strength);
+    displayDamage(team2Queue->getFront(), character2Strength);
 
     lastAttacker = 1;
 
   } else {
 
-    displayType(character2, 2, true);
-    displayType(character1, 1, false);
+    displayType(team2Queue->getFront(), true);
+    displayType(team1Queue->getFront(), false);
 
-    character1->defend( character2->attack() );
+    team1Queue->getFront()->defend( team2Queue->getFront()->attack() );
 
-    displayRoll(character2, true);
-    displayRoll(character1, false);
+    displayRoll(team2Queue->getFront(), true);
+    displayRoll(team1Queue->getFront(), false);
 
-    displayDamage(character1, 1, character1Strength);
+    displayDamage(team1Queue->getFront(), character1Strength);
 
     lastAttacker = 2;
 
   }
 
-  while( character1->getStrengthPts() > 0 && character2->getStrengthPts() > 0 ) {
+  while ( team1Queue->getFront()->getStrengthPts() > 0 && team2Queue->getFront()->getStrengthPts() > 0 ) {
 
-    character1Strength = character1->getStrengthPts();
-    character2Strength = character2->getStrengthPts();
+    character1Strength = team1Queue->getFront()->getStrengthPts();
+    character2Strength = team2Queue->getFront()->getStrengthPts();
 
     if (lastAttacker == 1) {
 
-      displayType(character2, 2, true);
-      displayType(character1, 1, false);
+      displayType(team2Queue->getFront(), true);
+      displayType(team1Queue->getFront(), false);
 
-      character1->defend( character2->attack() );
+      team1Queue->getFront()->defend( team2Queue->getFront()->attack() );
 
-      displayRoll(character2, true);
-      displayRoll(character1, false);
+      displayRoll(team2Queue->getFront(), true);
+      displayRoll(team1Queue->getFront(), false);
 
-      displayDamage(character1, 1, character1Strength);
+      displayDamage(team1Queue->getFront(), character1Strength);
 
       lastAttacker = 2;
 
     } else {
 
-      displayType(character1, 1, true);
-      displayType(character2, 2, false);
+      displayType(team1Queue->getFront(), true);
+      displayType(team2Queue->getFront(), false);
 
-      character2->defend( character1->attack() );
+      team2Queue->getFront()->defend( team1Queue->getFront()->attack() );
 
-      displayRoll(character1, true);
-      displayRoll(character2, false);
+      displayRoll(team1Queue->getFront(), true);
+      displayRoll(team2Queue->getFront(), false);
 
-      displayDamage(character2, 2, character2Strength);
+      displayDamage(team2Queue->getFront(), character2Strength);
 
       lastAttacker = 1;
 
@@ -149,7 +173,7 @@ int Game::firstStrike() {
 ** defending. If the character's strength was depleted during the encounter, a message outputs
 ** that the fighter died and that the other fighter won.
 ***********************************************************************************************/
-void Game::displayDamage(Character *character, const int &characterNumber, const int &originalStrength) {
+void Game::displayDamage(Character *character, const int &originalStrength) {
 
   if (character->getStrengthPts() <= 0) {
     cout << "Total inflicted damage: " << originalStrength << endl;
@@ -159,14 +183,13 @@ void Game::displayDamage(Character *character, const int &characterNumber, const
     cout << "Total inflicted damage: " << originalStrength - character->getStrengthPts() << endl;
   }
 
-  cout << "Defender's strength after this attack: ";
+  cout << character->getName() << "'s strength after this attack: ";
 
   if (character->getStrengthPts() > 0) {
     cout << character->getStrengthPts();
   } else {
     cout << 0 << endl;
-    cout << "Fighter " << characterNumber << " has died." << endl;
-    cout << "Fighter " << (characterNumber % 2 + 1) << " wins this fight.";
+    cout << character->getName() << " has died." << endl;
   }
 
    cout << endl << endl;
@@ -181,9 +204,9 @@ void Game::displayDamage(Character *character, const int &characterNumber, const
 ***********************************************************************************************/
 void Game::displayRoll(Character *character, const bool &isAttacker) {
   if (isAttacker) {
-    cout << "Attacker hit points are " << character->getAttackPts() << endl;
+    cout << character->getName() << "'s hit points are " << character->getAttackPts() << endl;
   } else {
-    cout << "Defender defense points are " << character->getDefensePts() << endl;
+    cout << character->getName() << "'s defense points are " << character->getDefensePts() << endl;
 
   }
 
@@ -198,32 +221,16 @@ void Game::displayRoll(Character *character, const bool &isAttacker) {
 ** public methods in the object and depending on whether the character was attacking or
 ** defending.
 ***********************************************************************************************/
-void Game::displayType(Character *character, const int &characterNumber, const bool &isAttacker) {
+void Game::displayType(Character *character, const bool &isAttacker) {
 
   if (isAttacker) {
-    cout << "Attacker: Fighter " << characterNumber << " - " << character->getType() << endl;
+    cout << "Attacker: " << character->getName() << " - " << character->getType() << endl;
   } else {
-    cout << "Defender: Fighter " << characterNumber << " - " << character->getType() << endl;
+    cout << "Defender: " << character->getName() << " - " << character->getType() << endl;
     cout << "Defender Armor: " << character->getArmorPts() << endl;
     cout << "Defender Strength: " << character->getStrengthPts() << endl;
   }
 
-}
-
-
-/***********************************************************************************************
-** Description: Returns a pointer to a character representing the first fighter chosen.
-***********************************************************************************************/
-Character* Game::getFighter1() {
-  return fighter1;
-}
-
-
-/***********************************************************************************************
-** Description: Returns a Character pointer for the second fighter chosen.
-***********************************************************************************************/
-Character* Game::getFighter2() {
-  return fighter2;
 }
 
 
@@ -233,51 +240,50 @@ Character* Game::getFighter2() {
 ** character type. Memory is then allocated for the appropriate character and the pointer is
 ** assigned to the correct fighter data member.
 ***********************************************************************************************/
-void Game::setFighter(int fighter, int choice) {
-  if (fighter == 1) {
+void Game::addFighter(Container* teamQueue, int choice, string fighterName) {
+
+   Character* newFighter = nullptr;
 
     switch (choice) {
 
-      case 1 : fighter1 = new Barbarian;
+      case 1 : newFighter = new Barbarian(fighterName);
                break;
 
-      case 2 : fighter1 = new BlueMen;
+      case 2 : newFighter = new BlueMen(fighterName);
                break;
 
-      case 3 : fighter1 = new HarryPotter;
+      case 3 : newFighter = new HarryPotter(fighterName);
                break;
 
-      case 4 : fighter1 = new Medusa;
+      case 4 : newFighter = new Medusa(fighterName);
                break;
 
-      case 5 : fighter1 = new Vampire;
+      case 5 : newFighter = new Vampire(fighterName);
                break;
 
       default : {}
 
     }
 
-  } else if (fighter == 2) {
+    teamQueue->addBack(newFighter);
 
-    switch (choice) {
+}
 
-      case 1 : fighter2 = new Barbarian;
-               break;
 
-      case 2 : fighter2 = new BlueMen;
-               break;
+/***********************************************************************************************
+** Description: Function that takes a pointer to a Container representing a team's list of fighters
+***********************************************************************************************/
+void Game::promptForFighters(Container* teamQueue, int teamSize) {
 
-      case 3 : fighter2 = new HarryPotter;
-               break;
+  int fightersAdded = 0;
 
-      case 4 : fighter2 = new Medusa;
-               break;
+  do {
 
-      case 5 : fighter2 = new Vampire;
+    int fighterChosen = gameMenu->getIntFromPrompt("Who should fighter " + to_string(fightersAdded + 1) + " be?", 1, gameMenu->getMenuChoices(), true);
+    string fighterName = gameMenu->getStrFromPrompt("What should this fighter's name be?", false);
+    addFighter(teamQueue, fighterChosen, fighterName);
+    fightersAdded++;
 
-      default : {}
+  } while (fightersAdded < teamSize);
 
-    }
-
-  }
 }

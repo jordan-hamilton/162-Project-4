@@ -6,9 +6,11 @@
 #define GAME_HPP
 
 #include <iostream>
+#include <string>
 
 #include "Character.hpp"
 #include "Container.hpp"
+#include "Menu.hpp"
 #include "Barbarian.hpp"
 #include "BlueMen.hpp"
 #include "HarryPotter.hpp"
@@ -19,20 +21,20 @@ class Game {
 
   public:
     Game();
-    Game(int character1, int character2);
     ~Game();
+    void play();
 
   private:
-    void fight(Character* character1, Character* character2);
-    Character* fighter1 = nullptr;
-    Character* fighter2 = nullptr;
+    void fight(Container *team1Queue, Container *team2Queue);
+    Container *loserStack, *team1Queue, *team2Queue;
+    Menu *gameMenu = nullptr;
+    void populateMenu(Menu* menu);
     int firstStrike();
-    void displayRoll(Character* character, const bool &isAttacker);
-    void displayType(Character* character, const int &characterNumber, const bool &isAttacker);
-    void displayDamage(Character* character, const int &characterNumber, const int &originalStrength);
-    Character* getFighter1();
-    Character* getFighter2();
-    void setFighter(int fighter, int choice);
+    void displayRoll(Character *character, const bool &isAttacker);
+    void displayType(Character *character, const bool &isAttacker);
+    void displayDamage(Character *character, const int &originalStrength);
+    void addFighter(Container *teamQueue, int choice, std::string fighterName);
+    void promptForFighters(Container *teamQueue, int teamSize);
 
 };
 
