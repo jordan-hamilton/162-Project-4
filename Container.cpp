@@ -40,8 +40,8 @@ bool Container::isEmpty() {
 
 
 /*****************************************************************************************************
-** Description: This method takes a integer, allocates memory and adds a pointer to a
-** ContainerNode object to the back of the container, setting its Chracter to equal the pointer
+** Description: This method takes a pointer to a Character, allocates memory and adds a pointer to a
+** ContainerNode object to the back of the container, setting its gameCharacter to equal the pointer
 ** passed to the method. If the container was previously empty, the pointer to the object is
 ** assigned to the Container's head data member and the ContainerNode's prev and next pointers also
 ** to indicate that this is the only node in a circular linked list. Otherwise, the head is
@@ -75,8 +75,8 @@ void Container::addBack(Character* backCharacter) {
 
 
 /******************************************************************************************************
-** Description: This method takes a integer, allocates memory and adds a pointer to a
-** ContainerNode object to the front of the container, setting its Character to equal the pointer
+** Description: This method takes a pointer to a Character, allocates memory and adds a pointer to a
+** ContainerNode object to the front of the container, setting its gameCharacter to equal the pointer
 ** passed to the method. If the container was previously empty, the pointer to the object is
 ** assigned to the Container's head data member and the ContainerNode's prev and next pointers also
 ** to indicate that this is the only node in a circular linked list. Otherwise, the head is
