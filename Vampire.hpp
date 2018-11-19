@@ -10,7 +10,8 @@
 class Vampire : public Character {
 
   public:
-    Vampire() : Character() {
+    Vampire() : Character()  {}
+    Vampire(std::string nameIn) : Character(nameIn) {
       setArmorPts(1);
       setStrengthPts(18);
       setNumAttackDice(1);

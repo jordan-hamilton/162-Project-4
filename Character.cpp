@@ -21,6 +21,26 @@ Character::Character() {
 
 
 /***********************************************************************************************
+** Description: An overloaded constructor that takes a string to set the character's name and
+** initalizes data members.
+***********************************************************************************************/
+Character::Character(std::string nameIn) {
+
+  attackPts = 0;
+  defensePts = 0;
+  armorPts = -1;
+  strengthPts = -1;
+  numAttackDice = -1;
+  numAttackSides = -1;
+  numDefenseDice = -1;
+  numDefenseSides = -1;
+  characteristics = "";
+  name = nameIn;
+
+}
+
+
+/***********************************************************************************************
 ** Description: A method that takes an integer representing the number of dice that should be
 ** rolled, and the number of sides on the dice. The result of each roll is summed in a for loop
 ** and then returned as an integer.

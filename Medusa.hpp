@@ -10,7 +10,8 @@
 class Medusa : public Character {
 
   public:
-    Medusa() : Character() {
+    Medusa() : Character()  {}
+    Medusa(std::string nameIn) : Character(nameIn) {
       setArmorPts(3);
       setStrengthPts(8);
       setNumAttackDice(2);

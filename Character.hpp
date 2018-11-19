@@ -11,6 +11,7 @@ class Character {
 
   public:
   Character();
+  Character(std::string nameIn);
   virtual ~Character() {};
   virtual int attack() = 0;
   virtual int defend(int hitPts) = 0;

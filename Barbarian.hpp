@@ -10,7 +10,8 @@
 class Barbarian : public Character {
 
   public:
-    Barbarian() : Character() {
+    Barbarian() : Character() {}
+    Barbarian(std::string nameIn) : Character(nameIn) {
       setArmorPts(0);
       setStrengthPts(12);
       setNumAttackDice(2);

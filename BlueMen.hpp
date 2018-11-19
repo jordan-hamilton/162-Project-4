@@ -10,7 +10,8 @@
 class BlueMen : public Character {
 
   public:
-    BlueMen() : Character() {
+    BlueMen() : Character()  {}
+    BlueMen(std::string nameIn) : Character(nameIn) {
       setArmorPts(3);
       setStrengthPts(12);
       setNumAttackDice(2);

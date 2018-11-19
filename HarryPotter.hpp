@@ -10,7 +10,8 @@
 class HarryPotter : public Character {
 
   public:
-    HarryPotter() : Character() {
+    HarryPotter() : Character()  {}
+    HarryPotter(std::string nameIn) : Character(nameIn) {
       setArmorPts(0);
       setStrengthPts(10);
       setNumAttackDice(2);
