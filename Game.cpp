@@ -44,7 +44,7 @@ void Game::play() {
   while( !team1Queue->isEmpty() && !team2Queue->isEmpty() ) {
     fight(team1Queue, team2Queue);
   }
-  
+
 }
 
 /***********************************************************************************************
@@ -87,29 +87,13 @@ void Game::fight(Container* team1Queue, Container* team2Queue) {
 
   if (firstStrike() == 1) {
 
-    displayType(team1Queue->getFront(), true);
-    displayType(team2Queue->getFront(), false);
-
     team2Queue->getFront()->defend( team1Queue->getFront()->attack() );
-
-    displayRoll(team1Queue->getFront(), true);
-    displayRoll(team2Queue->getFront(), false);
-
-    displayDamage(team2Queue->getFront(), character2Strength);
 
     lastAttacker = 1;
 
   } else {
 
-    displayType(team2Queue->getFront(), true);
-    displayType(team1Queue->getFront(), false);
-
     team1Queue->getFront()->defend( team2Queue->getFront()->attack() );
-
-    displayRoll(team2Queue->getFront(), true);
-    displayRoll(team1Queue->getFront(), false);
-
-    displayDamage(team1Queue->getFront(), character1Strength);
 
     lastAttacker = 2;
 

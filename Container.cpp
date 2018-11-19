@@ -73,7 +73,6 @@ void Container::addBack(Character* backCharacter) {
 }
 
 
-
 /******************************************************************************************************
 ** Description: This method takes a pointer to a Character, allocates memory and adds a pointer to a
 ** ContainerNode object to the front of the container, setting its gameCharacter to equal the pointer
