@@ -17,23 +17,24 @@
 ***********************************************************************************************/
 int main() {
 
-  Menu mainMenu, gameMenu;
+  Menu* mainMenu = new Menu;
+  Game* tournament = new Game;
 
-  mainMenu.addMenuItem("Play a game");
-  mainMenu.addMenuItem("Exit");
-
-  gameMenu.addMenuItem("Barbarian");
-  gameMenu.addMenuItem("Blue Men");
-  gameMenu.addMenuItem("Harry Potter");
-  gameMenu.addMenuItem("Medusa");
-  gameMenu.addMenuItem("Vampire");
+  mainMenu->addMenuItem("Play a game");
+  mainMenu->addMenuItem("Exit");
 
   do {
-    int character1 = gameMenu.getIntFromPrompt("Who should fighter 1 be?", 1, gameMenu.getMenuChoices(), true);
-    int character2 = gameMenu.getIntFromPrompt("Who should fighter 2 be?", 1, gameMenu.getMenuChoices(), true);
-    Game newGame(character1, character2);
 
-  } while (mainMenu.getIntFromPrompt(1, mainMenu.getMenuChoices(), true) != 2);
+    tournament->play();
+
+  } while (mainMenu->getIntFromPrompt(1, mainMenu->getMenuChoices(), true) != 2);
+
+
+  delete mainMenu;
+  mainMenu = nullptr;
+
+  delete tournament;
+  tournament = nullptr;
 
   return 0;
 
