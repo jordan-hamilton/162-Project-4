@@ -13,6 +13,7 @@ Menu::Menu() {
   menuPrompt = "";
   lastEnteredString = "";
   intArray = nullptr;
+  intArraySize = -1;
 }
 
 
@@ -23,6 +24,7 @@ Menu::Menu(const std::string &prompt) {
   menuPrompt = prompt;
   lastEnteredString = "";
   intArray = nullptr;
+  intArraySize = -1;
 }
 
 
