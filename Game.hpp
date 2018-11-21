@@ -6,6 +6,7 @@
 #define GAME_HPP
 
 #include <iostream>
+#include <memory>
 #include <string>
 
 #include "Character.hpp"
@@ -25,16 +26,19 @@ class Game {
     void play();
 
   private:
-    void fight(Container *team1Queue, Container *team2Queue);
-    Container *loserStack, *team1Queue, *team2Queue;
-    Menu *gameMenu = nullptr;
-    void populateMenu(Menu* menu);
+    int team1Score, team2Score;
+    std::shared_ptr<Container> loserStack, team1Queue, team2Queue;
+    std::shared_ptr<Menu> gameMenu, loserMenu;
+    void populateMenus();
+    void fight();
     int firstStrike();
-    void displayRoll(Character *character, const bool &isAttacker);
-    void displayType(Character *character, const bool &isAttacker);
-    void displayDamage(Character *character, const int &originalStrength);
-    void addFighter(Container *teamQueue, int choice, std::string fighterName);
-    void promptForFighters(Container *teamQueue, int teamSize);
+    void endFight(const int &origStrength1, const int &origStrength2);
+    void addFighter(std::shared_ptr<Container> teamQueue, const int &choice, const std::string &fighterName);
+    void promptForFighters(std::shared_ptr<Container> teamQueue, const int &teamSize);
+    int getTeam1Score();
+    int getTeam2Score();
+    void setTeam1Score(const int &score);
+    void setTeam2Score(const int &score);
 
 };
 
