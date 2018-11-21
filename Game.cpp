@@ -23,14 +23,6 @@ Game::Game() {
 }
 
 
-/***********************************************************************************************
-** Description: Destructor that deletes pointers to each team's queue and the game's menu.
-***********************************************************************************************/
-Game::~Game() {
-
-}
-
-
 void Game::play() {
 
   cout << "\nFighter Tournament" << endl;
@@ -69,8 +61,8 @@ void Game::play() {
 }
 
 /***********************************************************************************************
-** Description: Take a pointer to a menu object and adds relevant options for Characters to the
-** game's menu object using the addMenuItem method in the Menu class.
+** Description: Method that adds relevant options for Characters to the game's menu object and
+** the losers menu object using the addMenuItem method in the Menu class.
 ***********************************************************************************************/
 void Game::populateMenus() {
 
@@ -91,13 +83,14 @@ void Game::populateMenus() {
 
 
 /***********************************************************************************************
-** Description: Takes two pointers to Container objects, then initializes a random generator
-** seed and sets the random generator seed for any random events in the game. The strength
-** of each character is stored in temporary variables, then either character1 or character2
-** attacks first, depending on the return value of the firstStrike method. Fighter information
-** and fight results are displayed with displayType, displayRoll and displayDamage methods.
-** The most recent attacker is stored in the lastAttacker variable, then a while loop repeats,
-** continues the fight, alternating attackers until one Character's strength is depleted.
+** Description: This method initializes integers for indicating the most recent attacker (Team 1
+** or Team 2) and the strength of each character in temporary variables, then either the fighter
+** at the top of Team 1 or Team 2's queue attacks first, depending on the return value of the
+** firstStrike method. The most recent attacker is updated in the lastAttacker variable,
+** with a while loop that alternates the attackers until one Character's strength is depleted.
+** The endFight method is called when one fighter's strength is at or below 0 to output results,
+** update the score and handle the contents of the team queues and loser stack according to the
+** results of the fight.
 ***********************************************************************************************/
 void Game::fight() {
 
@@ -153,7 +146,7 @@ int Game::firstStrike() {
 
 
 /***********************************************************************************************
-** Description: After an attack and defense call, this function takes a pointer to a
+** Description: After an attack and defense call, this method takes a pointer to a
 ** Character, a constant reference to an integer for the fighter number (1 or 2), and a constant
 ** reference to a boolean to indicate if the character was attacking or defending during the
 ** encounter. It then outputs the necessary information on the character to the screen using
@@ -197,7 +190,7 @@ void Game::endFight(const int &origStrength1, const int &origStrength2) {
 
 
 /***********************************************************************************************
-** Description: Function that takes two integers representing the number of the decision order
+** Description: Method that takes two integers representing the number of the decision order
 ** from the menu prompt (selecting fighter 1 or fighter 2), followed by the menu choice of
 ** character type. Memory is then allocated for the appropriate character and the pointer is
 ** assigned to the correct fighter data member.
@@ -233,8 +226,10 @@ void Game::addFighter(shared_ptr<Container> teamQueue, const int &choice, const 
 
 
 /**************************************************************************************************
-** Description: Function that takes a shared pointer to a Container representing a team's list of
-** fighters and an integer that represents the requested number of fighters, then
+** Description: Method that takes a shared pointer to a Container representing a team's list of
+** fighters and an integer that represents the requested number of fighters, then uses a loop
+** to prompt the user to add that requested number of fighters to the queue using the addFighter
+** method
 **************************************************************************************************/
 void Game::promptForFighters(shared_ptr<Container> teamQueue, const int &teamSize) {
 
