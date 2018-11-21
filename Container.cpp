@@ -2,6 +2,8 @@
 
 using std::cout;
 using std::endl;
+using std::move;
+using std::shared_ptr;
 
 /***********************************************************************************************
 ** Description: Constructor that initializes the head data member to nullptr.
@@ -51,7 +53,7 @@ bool Container::isEmpty() {
 ** was previously at the back of the container is set to the pointer to the new ContainerNode object,
 ** as is the head's prev data member.
 *****************************************************************************************************/
-void Container::addBack(Character* backCharacter) {
+void Container::addBack( shared_ptr<Character> backCharacter ) {
 
   if ( isEmpty() ) {
 
@@ -69,7 +71,6 @@ void Container::addBack(Character* backCharacter) {
 
   }
 
-
 }
 
 
@@ -85,7 +86,7 @@ void Container::addBack(Character* backCharacter) {
 ** set to the pointer to the new ContainerNode object, as is the head's prev data member. The new
 ** object is then set as the head of the container.
 ******************************************************************************************************/
-void Container::addFront(Character* frontCharacter) {
+void Container::addFront(shared_ptr<Character> frontCharacter) {
 
   if ( isEmpty() ) {
 
@@ -114,7 +115,7 @@ void Container::addFront(Character* frontCharacter) {
 ** the switch statement in main.cpp calls the isEmpty method first to ensure that getFront
 ** can be called safely.
 ***********************************************************************************************/
-Character* Container::getFront() {
+shared_ptr<Character> Container::getFront() {
     return head->gameCharacter;
 }
 
@@ -136,11 +137,13 @@ void Container::removeFront() {
       ContainerNode* nextHead = head->next;
       nextHead->prev = head->prev;
       head->prev->next = nextHead;
+      head->gameCharacter.reset();
       delete head;
       head = nextHead;
 
     } else {
 
+      head->gameCharacter.reset();
       delete head;
       head = nullptr;
 

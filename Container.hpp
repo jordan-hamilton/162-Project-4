@@ -6,6 +6,7 @@
 #define QUEUE_HPP
 
 #include <iostream>
+#include <memory>
 
 #include "Character.hpp"
 
@@ -15,7 +16,7 @@ class Container {
 
     ContainerNode* next;
     ContainerNode* prev;
-    Character* gameCharacter;
+    std::shared_ptr<Character> gameCharacter;
 
   };
 
@@ -23,9 +24,9 @@ class Container {
     Container();
     ~Container();
     bool isEmpty();
-    void addBack(Character* backCharacter);
-    void addFront(Character* frontCharacter);
-    Character* getFront();
+    void addBack(std::shared_ptr<Character> backCharacter);
+    void addFront(std::shared_ptr<Character> frontCharacter);
+    std::shared_ptr<Character> getFront();
     void removeFront();
     void printContainer();
 
