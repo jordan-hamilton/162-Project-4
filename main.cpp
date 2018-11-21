@@ -1,13 +1,18 @@
-/***********************************************************************************************
+/************************************************************************************************
 ** Program name: Project 4
 ** Author: Jordan Hamilton
-** Date: 11/18/2018
-** Description: This fantasy fighter game prompts the user to select two fighters from the
-** following possible choices: Barbarian, Blue Men, Harry Potter, Medusa, and Vampire. Once
-** selected, the characters are initialized with their unique attributes and a random character
-** randomly attacks the other character. The fight continues, displaying results until one
-** Character's strength is depleted.
-***********************************************************************************************/
+** Date: 11/21/2018
+** Description: This fantasy fighter game prompts the user to select a number of fighters to fill
+** two team lineups from the following possible fighter choices: Barbarian, Blue Men, Harry
+** Potter, Medusa, and Vampire. Once selected, the characters are initialized with their unique
+** attributes and the fighters at the beginning of each team lineup attack and defend,
+** beginning with a random fighter attacking the other fighter. The fight continues until one
+** fighter's strength is depleted, then the losing fighter is added to the top of a loser
+** stack. The winning fighter is moved to the back of the team's lineup to fight later, and
+** the winning team's score is incremented. Once there is a lineup with no remaining fighters,
+** the score is tallied and the winning team lineup is displayed to the user, with the option
+** to view the losing fighters.
+************************************************************************************************/
 
 #include "Menu.hpp"
 #include "Game.hpp"

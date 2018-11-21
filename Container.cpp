@@ -14,7 +14,7 @@ Container::Container() {
 
 
 /***********************************************************************************************
-** Description: Destructor that removes items from the container until the isEmpty method
+** Description: Destructor that removes nodes from the container until the isEmpty method
 ** determines that the circular linked list is empty.
 ***********************************************************************************************/
 Container::~Container() {
@@ -110,10 +110,7 @@ void Container::addFront(shared_ptr<Character> frontCharacter) {
 
 
 /***********************************************************************************************
-** Description: Returns the integer assigned to the Character pointer in the ContainerNode object.
-** Note that to prevent getFront from trying to dereference to pointer when head is nullptr,
-** the switch statement in main.cpp calls the isEmpty method first to ensure that getFront
-** can be called safely.
+** Description: Returns the shared pointer to the Character in the head ContainerNode object.
 ***********************************************************************************************/
 shared_ptr<Character> Container::getFront() {
     return head->gameCharacter;
@@ -124,9 +121,10 @@ shared_ptr<Character> Container::getFront() {
 ** Description: This method checks that head is a valid pointer, then assigns the object
 ** after head to a temporary pointer, nextHead. nextHead's prev pointer is set to the head's prev
 ** pointer, the last node in the container, and this node's next pointer is set to the nextHead.
-** Finally, memory allocated for the current head is freed and head is assigned the pointer to
-** nextHead. If head's next pointer is equal to head, indicating that head was the only node in
-** the container, then memory is simply freed and head is assigned nullptr.
+** Finally, the shared pointer is reset to release ownership and memory allocated for the
+** current head is freed and head is assigned the pointer to nextHead. If head's next pointer is
+** equal to head, indicating that head was the only node in the container, then memory is simply
+** freed after resetting the Character's shared pointer and head is assigned nullptr.
 ***********************************************************************************************/
 void Container::removeFront() {
 
