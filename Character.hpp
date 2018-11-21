@@ -17,6 +17,7 @@ class Character {
   virtual int defend(int hitPts) = 0;
 
   int rollDie(int numSides, int numDice);
+  void restoreHealth(const int &originalStrength);
 
   int getAttackPts();
   int getDefensePts();

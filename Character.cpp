@@ -58,6 +58,28 @@ int Character::rollDie(int numDice, int numSides) {
 }
 
 
+/***********************************************************************************************
+** Description: A method that takes an integer representing the health of a Character before an
+** attack, then
+***********************************************************************************************/
+void Character::restoreHealth(const int &originalStrength) {
+
+  if ( originalStrength != getStrengthPts() ) {
+
+    int addedHealth = rand() % getStrengthPts() + 1;
+
+    if (getStrengthPts() + addedHealth <= originalStrength) {
+      setStrengthPts( getStrengthPts() + addedHealth );
+    } else {
+      setStrengthPts(originalStrength);
+    }
+
+  }
+
+
+}
+
+
 int Character::getAttackPts() {
   return attackPts;
 }
