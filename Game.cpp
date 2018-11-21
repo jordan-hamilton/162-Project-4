@@ -146,13 +146,14 @@ int Game::firstStrike() {
 
 
 /***********************************************************************************************
-** Description: After an attack and defense call, this method takes a pointer to a
-** Character, a constant reference to an integer for the fighter number (1 or 2), and a constant
-** reference to a boolean to indicate if the character was attacking or defending during the
-** encounter. It then outputs the necessary information on the character to the screen using
-** public methods in the object and depending on whether the character was attacking or
-** defending. If the character's strength was depleted during the encounter, a message outputs
-** that the fighter died and that the other fighter won.
+** Description: After an attack and defense call, this method takes constant references to two
+** integers for each team's fighter's strength prior to a fight. It then outputs the results
+** of the fight based on the strength of each fighter, then restores the strength points of the
+** winning fighter by passing the corresponding parameter to the Character's restoreHealth
+** member function. That fighter is then placed at the back of the team's queue, and the team's
+** score is incremented by one. The pointer to the losing fighter is added to the top of the
+** loser stack and removed from the front of the team's queue. The round number is then
+** incremented by one.
 ***********************************************************************************************/
 void Game::endFight(const int &origStrength1, const int &origStrength2) {
 
