@@ -11,6 +11,11 @@ using std::to_string;
 using std::unique_ptr;
 
 
+/***********************************************************************************************
+** Description: Default constructor that initalizes data members for team scores and the number of
+** rounds played, allocates memory for unique pointers to the game and loser menus, and
+** allocates memory for shared pointers to the team queues and the loser stack.
+***********************************************************************************************/
 Game::Game() {
   gameMenu = unique_ptr<Menu>(new Menu);
   loserMenu = unique_ptr<Menu>(new Menu("Would you like to view fighters who lost their fights?"));
@@ -23,6 +28,15 @@ Game::Game() {
 }
 
 
+/***********************************************************************************************
+** Description: Method that prompts the user to fighters to each team's lineup using the
+** promptForFighters method, then uses a while loop to make the first fighter in each team's
+** lineup fight until one team no longer has any fighters. The final score is then displayed
+** to the user and the user is prompted to display the list of losers in the tournament, or
+** continue to the main menu. The team queues and loser stack are cleared, and the scores and
+** number of rounds completed in the tournament are reset after the tournament is complete so
+** a new tournament can begin if the user selects to play again from the main menu.
+***********************************************************************************************/
 void Game::play() {
 
   cout << "\nFighter Tournament" << endl;
@@ -146,7 +160,7 @@ int Game::firstStrike() {
 
 
 /***********************************************************************************************
-** Description: After an attack and defense call, this method takes constant references to two
+** Description: After a fight is completed, this method takes constant references to two
 ** integers for each team's fighter's strength prior to a fight. It then outputs the results
 ** of the fight based on the strength of each fighter, then restores the strength points of the
 ** winning fighter by passing the corresponding parameter to the Character's restoreHealth
@@ -162,7 +176,7 @@ void Game::endFight(const int &origStrength1, const int &origStrength2) {
     cout << team1Queue->getFront()->getName() << " was defeated by "
          << team2Queue->getFront()->getName() << "." << endl;
 
-    team2Queue->getFront()->restoreHealth(origStrength1);
+    team2Queue->getFront()->restoreHealth(origStrength2);
     team2Queue->addBack( team2Queue->getFront() );
     team2Queue->removeFront();
     setTeam2Score( getTeam2Score() + 1 );
@@ -191,10 +205,12 @@ void Game::endFight(const int &origStrength1, const int &origStrength2) {
 
 
 /***********************************************************************************************
-** Description: Method that takes two integers representing the number of the decision order
-** from the menu prompt (selecting fighter 1 or fighter 2), followed by the menu choice of
-** character type. Memory is then allocated for the appropriate character and the pointer is
-** assigned to the correct fighter data member.
+** Description: Method that takes a shared pointer to a Container for a team's lineup, a
+** constant reference to an integer that corresponds to a menu selection for a fighter, and a
+** constant reference to a string for the fighter's name. a switch statement creates a shared
+** pointer to the correct inherited Character class based on the menu choice passed to the
+** method, then adds that Character to the back of the team's queue using the Container's
+** addBack member function.
 ***********************************************************************************************/
 void Game::addFighter(shared_ptr<Container> teamQueue, const int &choice, const string &fighterName) {
 
@@ -227,10 +243,10 @@ void Game::addFighter(shared_ptr<Container> teamQueue, const int &choice, const 
 
 
 /**************************************************************************************************
-** Description: Method that takes a shared pointer to a Container representing a team's list of
-** fighters and an integer that represents the requested number of fighters, then uses a loop
-** to prompt the user to add that requested number of fighters to the queue using the addFighter
-** method
+** Description: Method that takes a shared pointer to a Container representing a team's queue of
+** fighters and a constant reference to an integer that represents the requested number of
+** fighters, then uses a loop to prompt the user to add that requested number of fighters to the
+** queue using the addFighter method.
 **************************************************************************************************/
 void Game::promptForFighters(shared_ptr<Container> teamQueue, const int &teamSize) {
 
