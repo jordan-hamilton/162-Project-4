@@ -17,6 +17,9 @@
 ***********************************************************************************************/
 int main() {
 
+  unsigned seed = time(0);
+  srand(seed);
+
   Menu* mainMenu = new Menu;
   Game* tournament = new Game;
 

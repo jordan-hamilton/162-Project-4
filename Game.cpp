@@ -33,9 +33,6 @@ Game::~Game() {
 
 void Game::play() {
 
-  unsigned seed = time(0);
-  srand(seed);
-
   cout << "\nFighter Tournament" << endl;
   int team1Size = gameMenu->getIntFromPrompt("\nHow many fighters should Team 1 have?", 1, 10, false);
   promptForFighters(team1Queue, team1Size);
@@ -46,25 +43,26 @@ void Game::play() {
     fight();
   }
 
-  cout << "Game Over" << endl;
+  cout << endl << "Game Over" << endl << endl;
 
   if ( getTeam1Score() > getTeam2Score() ) {
-    cout << "Team 1 wins with " << getTeam1Score() << " points!" << endl;
+    cout << "Team 1 wins with " << getTeam1Score() << " points!" << endl << endl;
   } else if ( getTeam1Score() < getTeam2Score() ) {
-    cout << "Team 2 wins with " << getTeam2Score() << " points!" << endl;
+    cout << "Team 2 wins with " << getTeam2Score() << " points!" << endl << endl;
   } else {
-    cout << "It's a draw! Team 1 and Team 2 tie with " << getTeam1Score() << " points!" << endl;
+    cout << "It's a draw! Team 1 and Team 2 tie with " << getTeam1Score() << " points!" << endl << endl;
   }
 
   if (loserMenu->getIntFromPrompt(1, loserMenu->getMenuChoices(), true) == 1) {
-    cout << "Losers:" << endl;
+    cout << endl << "Losers:" << endl;
     loserStack->printContainer();
+    cout << endl;
   }
 
   team1Queue->clear();
   team2Queue->clear();
   loserStack->clear();
-  setRound(0);
+  setRound(1);
   setTeam1Score(0);
   setTeam2Score(0);
 
@@ -108,7 +106,7 @@ void Game::fight() {
   int origStrength1 = team1Queue->getFront()->getStrengthPts();
   int origStrength2 = team2Queue->getFront()->getStrengthPts();
 
-  cout << endl << "Round " << round << ": " << endl;
+  cout << endl << "Round " << round << ":" << endl;
   cout << "Team 1 - " << team1Queue->getFront()->getName()
        << " vs. Team 2 - " << team2Queue->getFront()->getName() << endl;
 
