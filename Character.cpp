@@ -59,8 +59,11 @@ int Character::rollDie(int numDice, int numSides) {
 
 
 /***********************************************************************************************
-** Description: A method that takes an integer representing the health of a Character before an
-** attack, then
+** Description: A method that takes a constant reference to an integer representing the health
+** of a Character before a fight, then randomly sets the Character's strength points to an
+** an amount between 1 and the current Character's strength points. If the random health
+** increase would exceed the Character's strength points before a fight, the strength is only
+** restored to the original strength.
 ***********************************************************************************************/
 void Character::restoreHealth(const int &originalStrength) {
 
