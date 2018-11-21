@@ -19,11 +19,12 @@ Game::Game() {
   team2Queue = make_shared<Container>();
   loserStack = make_shared<Container>();
   team1Score = team2Score = 0;
+  round = 1;
 }
 
 
 /***********************************************************************************************
-** Description: Destructor that deletes pointers to teach team's queue and the game's menu.
+** Description: Destructor that deletes pointers to each team's queue and the game's menu.
 ***********************************************************************************************/
 Game::~Game() {
 
@@ -35,7 +36,7 @@ void Game::play() {
   unsigned seed = time(0);
   srand(seed);
 
-  cout << "Fighter Tournament" << endl;
+  cout << "\nFighter Tournament" << endl;
   int team1Size = gameMenu->getIntFromPrompt("\nHow many fighters should Team 1 have?", 1, 10, false);
   promptForFighters(team1Queue, team1Size);
   int team2Size = gameMenu->getIntFromPrompt("\nHow many fighters should Team 2 have?", 1, 10, false);
@@ -63,6 +64,7 @@ void Game::play() {
   team1Queue->clear();
   team2Queue->clear();
   loserStack->clear();
+  setRound(0);
   setTeam1Score(0);
   setTeam2Score(0);
 
@@ -106,7 +108,9 @@ void Game::fight() {
   int origStrength1 = team1Queue->getFront()->getStrengthPts();
   int origStrength2 = team2Queue->getFront()->getStrengthPts();
 
-  cout << endl;
+  cout << endl << "Round " << round << ": " << endl;
+  cout << "Team 1 - " << team1Queue->getFront()->getName()
+       << " vs. Team 2 - " << team2Queue->getFront()->getName() << endl;
 
   if (firstStrike() == 1) {
 
@@ -189,6 +193,8 @@ void Game::endFight(const int &origStrength1, const int &origStrength2) {
 
  }
 
+ setRound( getRound() + 1 );
+
 }
 
 
@@ -248,6 +254,11 @@ void Game::promptForFighters(shared_ptr<Container> teamQueue, const int &teamSiz
 }
 
 
+int Game::getRound() {
+  return round;
+}
+
+
 int Game::getTeam1Score() {
   return team1Score;
 }
@@ -255,6 +266,11 @@ int Game::getTeam1Score() {
 
 int Game::getTeam2Score() {
   return team2Score;
+}
+
+
+void Game::setRound(const int &roundNumber) {
+  round = roundNumber;
 }
 
 
