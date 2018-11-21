@@ -154,6 +154,15 @@ void Container::removeFront() {
 }
 
 
+void Container::clear() {
+
+  while (!isEmpty()) {
+    removeFront();
+  }
+
+}
+
+
 /**************************************************************************************************
 ** Description: This method checks that the container is not empty using the isEmpty method, then
 ** initializes a temporary pointer, currentNode, to the head pointer, and loops through the

@@ -28,6 +28,7 @@ class Container {
     void addFront(std::shared_ptr<Character> frontCharacter);
     std::shared_ptr<Character> getFront();
     void removeFront();
+    void clear();
     void printContainer();
 
   private:
